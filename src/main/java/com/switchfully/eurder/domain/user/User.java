@@ -7,12 +7,12 @@ import java.util.UUID;
 
 public class User {
 
-    private UUID id;
-    private String firstName;
-    private String lastName;
-    private EmailAddress emailAddress;
-    private Address address;
-    private String phoneNumber;
+    private final UUID id;
+    private final String firstName;
+    private final String lastName;
+    private final EmailAddress emailAddress;
+    private final Address address;
+    private final String phoneNumber;
     private Role role;
 
     public User(UserBuilder userBuilder){
@@ -73,15 +73,7 @@ public class User {
         }
 
         public User build() {
-            User user = new User(this);
-            user.address = this.address;
-            user.lastName = this.lastName;
-            user.role = this.role;
-            user.firstName = this.firstName;
-            user.id = this.id;
-            user.emailAddress = this.emailAddress;
-            user.phoneNumber = this.phoneNumber;
-            return user;
+            return new User(this);
         }
     }
 }
