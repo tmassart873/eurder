@@ -3,12 +3,13 @@ package com.switchfully.eurder.repository;
 import com.switchfully.eurder.domain.email.EmailAddress;
 import com.switchfully.eurder.domain.user.User;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-@Component
+@Repository
 public class UserRepository {
     private HashMap<UUID, User> users;
 
