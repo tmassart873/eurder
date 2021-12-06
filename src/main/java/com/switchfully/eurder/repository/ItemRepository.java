@@ -23,4 +23,8 @@ public class ItemRepository {
         return items.values().stream().toList();
     }
 
+    public Item getItemById(UUID id){
+        return items.get(id);
+    }
+
 }
