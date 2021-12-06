@@ -36,4 +36,8 @@ public class Item {
     public int getAmountInStock() {
         return amountInStock;
     }
+
+    public boolean isAvailable(){
+        return amountInStock > 0;
+    }
 }
