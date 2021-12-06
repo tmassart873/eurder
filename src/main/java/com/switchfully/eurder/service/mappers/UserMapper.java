@@ -31,7 +31,5 @@ public class UserMapper {
                 .setPhoneNumber(user.getPhoneNumber())
                 .setPassword(user.getPassword())
                 .setRole(user.getRole());
-
-
     }
 }
