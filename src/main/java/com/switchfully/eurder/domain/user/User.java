@@ -3,7 +3,6 @@ package com.switchfully.eurder.domain.user;
 import com.switchfully.eurder.domain.Feature;
 import com.switchfully.eurder.domain.address.Address;
 import com.switchfully.eurder.domain.email.EmailAddress;
-import com.switchfully.eurder.repository.UserRepository;
 
 import java.util.UUID;
 
@@ -143,6 +142,9 @@ public class User {
         }
         if (lastName == null || lastName.trim().equals("")) {
             throw new IllegalArgumentException("The last name should be filled!");
+        }
+        if (emailAddress == null) {
+            throw new IllegalArgumentException("The email address should be filled!");
         }
         if (address == null) {
             throw new IllegalArgumentException("The address should be filled!");
