@@ -29,4 +29,40 @@ public class ItemGroup {
         double price = itemRepository.getItemById(itemId).getPrice();
         return amount * price;
     }
+
+    public UUID getItemId() {
+        return itemId;
+    }
+
+    public ItemGroup setItemId(UUID itemId) {
+        this.itemId = itemId;
+        return this;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public ItemGroup setAmount(int amount) {
+        this.amount = amount;
+        return this;
+    }
+
+    public LocalDate getShippingDate() {
+        return shippingDate;
+    }
+
+    public ItemGroup setShippingDate(LocalDate shippingDate) {
+        this.shippingDate = shippingDate;
+        return this;
+    }
+
+    public ItemRepository getItemRepository() {
+        return itemRepository;
+    }
+
+    public ItemGroup setItemRepository(ItemRepository itemRepository) {
+        this.itemRepository = itemRepository;
+        return this;
+    }
 }
