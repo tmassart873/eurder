@@ -9,7 +9,6 @@ import com.switchfully.eurder.service.dtos.userdto.UserDto;
 import com.switchfully.eurder.service.mappers.UserMapper;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.Email;
 import java.util.List;
 
 @Service
@@ -47,11 +46,8 @@ public class UserService {
         return getAllUsers().stream().filter(user -> user.getRole().equals(Role.CUSTOMER)).toList();
     }
 
-    public boolean validateEmailAddress(CreateUserDto user){
+    public boolean validateEmailAddress(CreateUserDto user) {
         EmailAddress emailAddressToValidate = user.getEmailAddress();
-        System.out.println(emailAddressToValidate);
-        System.out.println(userRepository.getAllEmailAddress());
-        System.out.println(userRepository.getAllEmailAddress().contains(emailAddressToValidate));
         if (userRepository.getAllEmailAddress().contains(emailAddressToValidate)) {
             throw new IllegalArgumentException("The email address already exists!");
         }
