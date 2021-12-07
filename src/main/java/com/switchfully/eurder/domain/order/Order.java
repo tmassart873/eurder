@@ -10,12 +10,17 @@ public class Order {
     private final UUID orderId;
     private final UUID customerId;
     private final List<ItemGroup> items;
+    private double totalDue;
 
 
     public Order(UUID customerId, List<ItemGroup> items) {
         this.orderId = UUID.randomUUID();
         this.customerId = customerId;
         this.items = items;
+    }
+
+    public double getTotalDue() {
+        return totalDue;
     }
 
     public UUID getOrderId() {
@@ -30,8 +35,8 @@ public class Order {
         return items;
     }
 
-    public double calculateTotalDue(){
-        return items.stream().mapToDouble(ItemGroup::calculateItemTotalCost).sum();
+    public Order setTotalDue(double totalDue) {
+        this.totalDue = totalDue;
+        return this;
     }
-
 }
