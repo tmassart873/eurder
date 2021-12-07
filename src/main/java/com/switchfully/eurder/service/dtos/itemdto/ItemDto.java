@@ -3,17 +3,17 @@ package com.switchfully.eurder.service.dtos.itemdto;
 import java.util.UUID;
 
 public class ItemDto {
-    private UUID id;
+    private String id;
     private String name;
     private String description;
     private double price;
     private int amountInStock;
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public ItemDto setId(UUID id) {
+    public ItemDto setId(String id) {
         this.id = id;
         return this;
     }
