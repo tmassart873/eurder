@@ -6,7 +6,7 @@ import java.util.List;
 
 public enum Role {
     CUSTOMER(List.of(Feature.ORDER_ITEMS)),
-    ADMIN(List.of(Feature.ORDER_ITEMS,Feature.ADD_NEW_ITEM,Feature.REGISTER_ADMIN));
+    ADMIN(List.of(Feature.ORDER_ITEMS,Feature.ADD_NEW_ITEM,Feature.REGISTER_ADMIN,Feature.CHECK_CUSTOMERS,Feature.CHECK_SINGLE_CUSTOMER));
 
     private List<Feature> featureList;
 
