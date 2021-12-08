@@ -1,6 +1,7 @@
 package com.switchfully.eurder.repository;
 
 import com.switchfully.eurder.domain.email.EmailAddress;
+import com.switchfully.eurder.domain.user.Role;
 import com.switchfully.eurder.domain.user.User;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -36,5 +37,11 @@ public class UserRepository {
         return users.values().stream()
                 .map(User::getEmailAddress)
                 .toList();
+    }
+    public User getCustomerById(String id) {
+        return users.values().stream()
+                .filter(user -> user.getRole().equals(Role.CUSTOMER))
+                .filter(user -> user.getId().toString().equals(id))
+                .findFirst().orElse(null);
     }
 }
