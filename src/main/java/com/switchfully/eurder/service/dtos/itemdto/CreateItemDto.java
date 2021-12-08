@@ -31,4 +31,14 @@ public class CreateItemDto {
         this.amountInStock = amountInStock;
         return this;
     }
+
+    public CreateItemDto setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public CreateItemDto setDescription(String description) {
+        this.description = description;
+        return this;
+    }
 }
