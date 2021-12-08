@@ -1,19 +1,16 @@
 package com.switchfully.eurder.api;
 
-import com.switchfully.eurder.domain.item.Item;
 import com.switchfully.eurder.repository.ItemRepository;
 import com.switchfully.eurder.service.dtos.itemdto.CreateItemDto;
 import com.switchfully.eurder.service.dtos.itemdto.ItemDto;
 import com.switchfully.eurder.service.mappers.ItemMapper;
-import org.junit.Before;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.xml.bind.SchemaOutputResolver;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(classes = TestApplication.class)
@@ -30,7 +27,6 @@ public class ItemControllerIntegrationTest {
     ItemDto itemDto1;
     ItemDto itemDto2;
     List<ItemDto> actual;
-    static boolean isSetupDone = false;
 
     @BeforeEach
     void setUp() {
