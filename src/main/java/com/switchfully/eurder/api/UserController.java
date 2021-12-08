@@ -35,8 +35,15 @@ public class UserController {
 
     @GetMapping(path = "/customers",produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public List<UserDto> getAllCustomers(){
+    public List<UserDto> getAllCustomers(@RequestHeader String authorization){
+        securityService.validateAccess(authorization, Feature.CHECK_CUSTOMERS);
         return userService.getAllCustomers();
+    }
+    @GetMapping(path = "/customers/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public UserDto getSingleCustomer(@PathVariable String id, @RequestHeader String authorization){
+        securityService.validateAccess(authorization, Feature.CHECK_SINGLE_CUSTOMER);
+        return userService.getCustomerById(id);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
