@@ -89,7 +89,7 @@ public class UserControllerIntegrationTest {
     }
 
     @Test
-    void givenAdmin_getACustomers_thenReturnsASpecificCustomer() {
+    void givenAdmin_getACustomer_thenReturnsASpecificCustomer() {
         //Given
         UUID id = userDirk.getId();
 
