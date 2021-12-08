@@ -3,6 +3,7 @@ package com.switchfully.eurder.service.dtos.orderdto;
 import com.switchfully.eurder.domain.order.ItemGroup;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class OrderDto {
@@ -45,5 +46,13 @@ public class OrderDto {
     public OrderDto setItems(List<ItemGroup> items) {
         this.items = items;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderDto orderDto = (OrderDto) o;
+        return Objects.equals(orderId, orderDto.orderId);
     }
 }
