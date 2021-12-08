@@ -1,6 +1,6 @@
 package com.switchfully.eurder.service.dtos.itemdto;
 
-import java.util.UUID;
+import java.util.Objects;
 
 public class ItemDto {
     private String id;
@@ -52,5 +52,18 @@ public class ItemDto {
     public ItemDto setAmountInStock(int amountInStock) {
         this.amountInStock = amountInStock;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ItemDto itemDto = (ItemDto) o;
+        return Objects.equals(id, itemDto.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
