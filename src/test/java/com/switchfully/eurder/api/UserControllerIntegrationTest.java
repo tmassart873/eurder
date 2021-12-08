@@ -20,8 +20,6 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 @SpringBootTest(classes = TestApplication.class)
 public class UserControllerIntegrationTest {
