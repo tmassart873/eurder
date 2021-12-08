@@ -5,6 +5,8 @@ import com.switchfully.eurder.repository.ItemRepository;
 import com.switchfully.eurder.service.dtos.itemdto.CreateItemDto;
 import com.switchfully.eurder.service.dtos.itemdto.ItemDto;
 import com.switchfully.eurder.service.mappers.ItemMapper;
+import org.junit.Before;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +35,6 @@ public class ItemControllerIntegrationTest {
     @BeforeEach
     void setUp() {
         initItems();
-        if (!isSetupDone) {
-            itemDto1 = itemController.addNewItem(createItemDto1, "Basic YWRtaW4udG1Ab3JkZXIuY29tOmFkbWluX3Rt");
-            itemDto2 = itemController.addNewItem(createItemDto2, "Basic YWRtaW4udG1Ab3JkZXIuY29tOmFkbWluX3Rt");
-            actual = itemRepository.getAllItems().stream().map(item -> itemMapper.mapItemToItemDto(item)).toList();
-            isSetupDone = true;
-        }
-
     }
 
     private void initItems() {
@@ -60,9 +55,8 @@ public class ItemControllerIntegrationTest {
         //Given
 
         //When
-
-        System.out.println("actual :" + actual);
-        System.out.println("expected :" + itemDto1);
+        itemDto1 = itemController.addNewItem(createItemDto1, "Basic YWRtaW4udG1Ab3JkZXIuY29tOmFkbWluX3Rt");
+        actual = itemRepository.getAllItems().stream().map(item -> itemMapper.mapItemToItemDto(item)).toList();
 
         //Then
         assertTrue(actual.contains(itemDto1));
@@ -72,9 +66,12 @@ public class ItemControllerIntegrationTest {
     @Test
     void givenAnItemInTheRepository_whenGettingAllTheItems_thenAllItemsInTheRepository() {
         //Given
-        List<ItemDto> expectedItems = List.of(itemDto1, itemDto2);
-        //When
 
+        //When
+        itemDto1 = itemController.addNewItem(createItemDto1, "Basic YWRtaW4udG1Ab3JkZXIuY29tOmFkbWluX3Rt");
+        itemDto2 = itemController.addNewItem(createItemDto2, "Basic YWRtaW4udG1Ab3JkZXIuY29tOmFkbWluX3Rt");
+        List<ItemDto> expectedItems = List.of(itemDto1, itemDto2);
+        actual = itemRepository.getAllItems().stream().map(item -> itemMapper.mapItemToItemDto(item)).toList();
         //Then
         assertTrue(actual.containsAll(expectedItems));
 
