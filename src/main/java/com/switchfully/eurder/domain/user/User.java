@@ -126,6 +126,7 @@ public class User {
         public User build() {
             return new User(this);
         }
+
     }
     public boolean hasAccessTo(Feature feature) {
         return this.role.containsFeature(feature);
@@ -164,8 +165,20 @@ public class User {
         if (phoneNumber== null || phoneNumber.trim().equals("") ) {
             throw new IllegalArgumentException("The street number should be filled!");
         }
-
-
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", emailAddress=" + emailAddress +
+                ", address=" + address +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                '}';
     }
 }
