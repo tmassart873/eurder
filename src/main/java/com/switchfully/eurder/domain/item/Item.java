@@ -4,8 +4,8 @@ import java.util.UUID;
 
 public class Item {
     private final String id;
-    private final String name;
-    private final String description;
+    private String name;
+    private String description;
     private double price;
     private int amountInStock;
 
@@ -43,6 +43,21 @@ public class Item {
 
     public Item setAmountInStock(int amountInStock) {
         this.amountInStock = amountInStock;
+        return this;
+    }
+
+    public Item setPrice(double price) {
+        this.price = price;
+        return this;
+    }
+
+    public Item setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public Item setDescription(String description) {
+        this.description = description;
         return this;
     }
 }
