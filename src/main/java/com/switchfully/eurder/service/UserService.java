@@ -57,4 +57,8 @@ public class UserService {
     public List<UserDto> getAllUsers() {
         return userRepository.getAllUsers().stream().map(userMapper::mapUserToUserDto).toList();
     }
+
+    public UserDto getCustomerById(String id){
+        return userMapper.mapUserToUserDto(userRepository.getCustomerById(id));
+    }
 }
