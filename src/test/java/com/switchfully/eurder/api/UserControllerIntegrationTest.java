@@ -42,10 +42,10 @@ public class UserControllerIntegrationTest {
 
     @BeforeEach
     void setUp() {
+        userDirk = userRepository.getUserByEmail("dirk@order.com");
         if (!isSetupDone) {
             initTest();
             userController.createNewUser(createDirk, "Basic ");
-            userDirk = userRepository.getUserByEmail("dirk@order.com");
             isSetupDone = true;
         }
     }
@@ -56,7 +56,6 @@ public class UserControllerIntegrationTest {
         //Given
 
         //When
-        userDirk = userRepository.getUserByEmail("dirk@order.com");
 
         //Then
         Assertions.assertTrue(userRepository.getAllUsers().contains(userDirk));
