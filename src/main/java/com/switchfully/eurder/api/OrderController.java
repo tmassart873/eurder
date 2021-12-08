@@ -21,7 +21,6 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    //UserId need to be provided
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public OrderDto addNewOrder(@RequestBody CreateOrderDto createOrderDto) {
