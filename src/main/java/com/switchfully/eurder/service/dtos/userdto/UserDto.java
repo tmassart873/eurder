@@ -4,6 +4,7 @@ import com.switchfully.eurder.domain.address.Address;
 import com.switchfully.eurder.domain.email.EmailAddress;
 import com.switchfully.eurder.domain.user.Role;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class UserDto {
@@ -87,5 +88,27 @@ public class UserDto {
 
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", emailAddress=" + emailAddress +
+                ", address=" + address +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserDto userDto = (UserDto) o;
+        return Objects.equals(id, userDto.id);
     }
 }
