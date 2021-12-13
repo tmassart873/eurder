@@ -1,6 +1,7 @@
 package com.switchfully.eurder.api;
 
 import com.switchfully.eurder.service.OrderService;
+import com.switchfully.eurder.service.dtos.TotalOrderDto;
 import com.switchfully.eurder.service.dtos.orderdto.CreateOrderDto;
 import com.switchfully.eurder.service.dtos.orderdto.OrderDto;
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/orders")
@@ -31,5 +33,11 @@ public class OrderController {
     @ResponseStatus(HttpStatus.OK)
     public List<OrderDto> getAllOrders() {
         return orderService.getAllOrders();
+    }
+
+    @GetMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public TotalOrderDto getAllOrdersForCustomer(@PathVariable String id) {
+       return orderService.getOrdersByUser(UUID.fromString(id));
     }
 }
