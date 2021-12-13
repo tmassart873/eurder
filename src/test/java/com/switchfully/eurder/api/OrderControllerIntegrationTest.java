@@ -14,6 +14,7 @@ import com.switchfully.eurder.service.dtos.orderdto.CreateOrderDto;
 import com.switchfully.eurder.service.dtos.orderdto.OrderDto;
 import com.switchfully.eurder.service.mappers.ItemMapper;
 import com.switchfully.eurder.service.mappers.OrderMapper;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -41,7 +43,8 @@ public class OrderControllerIntegrationTest {
     @Autowired
     private OrderRepository orderRepository;
 
-    CreateOrderDto createOrderDto;
+    CreateOrderDto createOrderDto1;
+    CreateOrderDto createOrderDto2;
     User customerThatOrders;
     Address address;
     CreateItemDto itemToOrder;
@@ -69,8 +72,8 @@ public class OrderControllerIntegrationTest {
         itemToOrder = new CreateItemDto()
                 .setName("Chips")
                 .setDescription("Lays BBQ")
-                .setPrice(3.99)
-                .setAmountInStock(10);
+                .setPrice(3)
+                .setAmountInStock(100);
 
         itemDto = itemController.addNewItem(itemToOrder,"Basic YWRtaW4udG1Ab3JkZXIuY29tOmFkbWluX3Rt");
 
@@ -78,7 +81,10 @@ public class OrderControllerIntegrationTest {
 
         itemsToOrder = List.of(itemGroup);
 
-        createOrderDto = new CreateOrderDto()
+        createOrderDto1 = new CreateOrderDto()
+                .setCustomerId(customerThatOrders.getId())
+                .setItems(itemsToOrder);
+        createOrderDto2 = new CreateOrderDto()
                 .setCustomerId(customerThatOrders.getId())
                 .setItems(itemsToOrder);
     }
@@ -93,7 +99,7 @@ public class OrderControllerIntegrationTest {
         //Given
 
         //When
-        orderDto = orderController.addNewOrder(createOrderDto);
+        orderDto = orderController.addNewOrder(createOrderDto1);
         List<OrderDto> actual = orderRepository.getAllOrders().stream().map(order -> orderMapper.mapOrderToOrderDto(order)).toList();
 
         //Then
@@ -105,12 +111,13 @@ public class OrderControllerIntegrationTest {
         //Given
 
         //When
-         orderController.addNewOrder(createOrderDto);
+         orderController.addNewOrder(createOrderDto1);
         Order order = orderRepository.getAllOrders().get(0);
          int amountInStock = itemRepository.getItemById(order.getItems().get(0).getItemId()).getAmountInStock();
 
         //Then
-        assertEquals(1, amountInStock);
+        //2 orders of 9 items where ordered from the stock of 100 ( 100 - 9 - 9 = 82)
+        assertEquals(82, amountInStock);
     }
 
 
@@ -119,12 +126,25 @@ public class OrderControllerIntegrationTest {
         //Given
 
         //When
-        orderController.addNewOrder(createOrderDto);
+        orderController.addNewOrder(createOrderDto1);
         Order order = orderRepository.getAllOrders().get(0);
         LocalDate shippingDate = order.getItems().get(0).getShippingDate();
 
         //Then
         assertEquals(shippingDate, LocalDate.now().plusDays(1));
+    }
+
+    @Test
+    void givenACustomerThatDidSeveralOrders_whenGettingAllOrderByCustomerId_thenTheOrderOverviewIsReturned() {
+        //Given
+        UUID customerId = customerThatOrders.getId();
+
+        //When
+        orderController.addNewOrder(createOrderDto1);
+        orderController.addNewOrder(createOrderDto2);
+
+        //Then
+        Assertions.assertEquals(orderController.getAllOrdersForCustomer(customerId.toString()).getTotalDue(),54.0);
     }
 
 }
