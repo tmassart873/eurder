@@ -2,9 +2,11 @@ package com.switchfully.eurder.api;
 
 import com.switchfully.eurder.domain.Feature;
 import com.switchfully.eurder.domain.item.Item;
+import com.switchfully.eurder.domain.item.StockUrgency;
 import com.switchfully.eurder.repository.ItemRepository;
 import com.switchfully.eurder.service.ItemService;
 import com.switchfully.eurder.service.SecurityService;
+import com.switchfully.eurder.service.dtos.ItemOverviewDto;
 import com.switchfully.eurder.service.dtos.itemdto.CreateItemDto;
 import com.switchfully.eurder.service.dtos.itemdto.ItemDto;
 import com.switchfully.eurder.service.dtos.itemdto.UpdateItemDto;
@@ -53,6 +55,17 @@ public class ItemController {
                 .setDescription(updateItemDto.getDescription())
                 .setPrice(updateItemDto.getPrice());
         return itemMapper.mapItemToItemDto(item);
-
+    }
+    @GetMapping(path = "/overview",produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public List<ItemOverviewDto> getItemsOverview(@RequestHeader String authorization){
+        securityService.validateAccess(authorization, Feature.CHECK_OVERVIEW);
+        return itemService.getItemsOverview();
+    }
+    @GetMapping(path = "/overview/{urgency}",produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public List<ItemOverviewDto> getItemsOverview(@PathVariable StockUrgency urgency, @RequestHeader String authorization){
+        securityService.validateAccess(authorization, Feature.CHECK_OVERVIEW);
+        return itemService.getItemsOverviewByUrgency(urgency);
     }
 }
