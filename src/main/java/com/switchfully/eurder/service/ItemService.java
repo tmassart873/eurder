@@ -1,15 +1,18 @@
 package com.switchfully.eurder.service;
 
 import com.switchfully.eurder.domain.item.Item;
+import com.switchfully.eurder.domain.item.StockUrgency;
 import com.switchfully.eurder.domain.order.ItemGroup;
 import com.switchfully.eurder.domain.order.Order;
 import com.switchfully.eurder.exceptions.NotEnoughStockException;
 import com.switchfully.eurder.repository.ItemRepository;
+import com.switchfully.eurder.service.dtos.ItemOverviewDto;
 import com.switchfully.eurder.service.dtos.itemdto.CreateItemDto;
 import com.switchfully.eurder.service.dtos.itemdto.ItemDto;
 import com.switchfully.eurder.service.mappers.ItemMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -27,21 +30,34 @@ public class ItemService {
         return itemMapper.mapItemToItemDto(item);
     }
 
-    public List<ItemDto> getAllItems(){
+    public List<ItemDto> getAllItems() {
         return itemRepository.getAllItems().stream().map(itemMapper::mapItemToItemDto).toList();
     }
 
-    public void reduceAmountInStock(ItemGroup itemGroup){
+    public void reduceAmountInStock(ItemGroup itemGroup) {
         int currentStock = itemRepository.getItemById(itemGroup.getItemId()).getAmountInStock();
         int amountOrdered = itemGroup.getAmount();
-        if(amountOrdered > currentStock){
+        if (amountOrdered > currentStock) {
             throw new NotEnoughStockException();
-        }
-        else
+        } else
             itemRepository.getItemById(itemGroup.getItemId()).setAmountInStock(currentStock - amountOrdered);
     }
-    public void updateStock(Order order){
+
+    public void updateStock(Order order) {
         order.getItems().forEach(this::reduceAmountInStock);
+    }
+
+    public List<ItemOverviewDto> getItemsOverview() {
+        return itemRepository.getAllItems().stream()
+                .map(item -> itemMapper.mapItemDToItemOverviewDto(itemMapper.mapItemToItemDto(item)))
+                .sorted(Comparator.comparingInt(item -> item.getUrgency().getImportance()))
+                .toList();
+    }
+
+    public List<ItemOverviewDto> getItemsOverviewByUrgency(StockUrgency urgency) {
+        return getItemsOverview().stream()
+                .filter(itemOverviewDto -> itemOverviewDto.getUrgency().equals(urgency))
+                .toList();
     }
 
 }
