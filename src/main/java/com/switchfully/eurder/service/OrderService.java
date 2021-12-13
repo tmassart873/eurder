@@ -5,6 +5,7 @@ import com.switchfully.eurder.domain.order.ItemGroup;
 import com.switchfully.eurder.domain.order.Order;
 import com.switchfully.eurder.repository.ItemRepository;
 import com.switchfully.eurder.repository.OrderRepository;
+import com.switchfully.eurder.service.dtos.TotalOrderDto;
 import com.switchfully.eurder.service.dtos.orderdto.CreateOrderDto;
 import com.switchfully.eurder.service.dtos.orderdto.OrderDto;
 import com.switchfully.eurder.service.mappers.OrderMapper;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class OrderService {
@@ -59,6 +61,10 @@ public class OrderService {
 
     public double calculateTotalDue(Order order){
         return order.getItems().stream().mapToDouble(this::calculateItemTotalCost).sum();
+    }
+
+    public TotalOrderDto getOrdersByUser(UUID customerId){
+        return orderMapper.mapListOfOrderToTotalOrderDto(orderRepository.getOrdersByCustomerId(customerId).stream().map(order -> orderMapper.mapOrderToOrderDto(order)).toList());
     }
 
 
